@@ -1,0 +1,385 @@
+:root {
+    --primary-red: #e11d48;
+    --bg-light: #f8fafc;
+    --text-dark: #1e293b;
+    --text-muted: #64748b;
+    --border-color: rgba(0, 0, 0, 0.08);
+    --card-bg: #ffffff;
+    --radius: 14px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Sarabun', sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg-light);
+    background-image:
+        linear-gradient(rgba(225, 29, 72, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(225, 29, 72, 0.05) 1px, transparent 1px);
+    background-size: 24px 24px;
+    color: var(--text-dark);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.full-wrapper {
+    width: 100%;
+    padding: 0 3rem;
+    box-sizing: border-box;
+}
+
+.main-container {
+    width: 100%;
+    padding: 3rem 4rem; /* ปรับตัวเลขนี้ให้เท่ากับหน้าสโมสร */
+    box-sizing: border-box;
+    flex: 1;
+}
+
+.page-title-section {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.page-title-section h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+}
+
+.page-title-section p {
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+/* Batch Filter Buttons */
+.year-filter-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+}
+
+.year-btn {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    color: #64748b;
+    padding: 10px 22px;
+    border-radius: 50px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.year-btn:hover {
+    color: #e11d48;
+    background: #fff1f2;
+    border-color: rgba(225, 29, 72, 0.2);
+    transform: translateY(-2px);
+}
+
+.year-btn.active {
+    background: #e11d48;
+    color: #ffffff;
+    border-color: #e11d48;
+    box-shadow: 0 4px 15px rgba(225, 29, 72, 0.3);
+}
+
+/* Heads Grid & Cards */
+.heads-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.8rem;
+    margin-bottom: 3rem;
+}
+
+.head-card {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 16px;
+    padding: 1.5rem 1.25rem;
+    text-align: center;
+    position: relative;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.head-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(225, 29, 72, 0.3);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
+}
+
+.year-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(225, 29, 72, 0.08);
+    color: #e11d48;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 50px;
+}
+
+.head-img-wrapper {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0.5rem 0 1rem;
+    border: 3px solid #e11d48;
+    box-shadow: 0 4px 12px rgba(225, 29, 72, 0.2);
+}
+
+.head-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.head-name {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 4px;
+}
+
+.head-dept {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin-bottom: 12px;
+}
+
+.head-contact-mini {
+    margin-top: auto;
+    font-size: 0.82rem;
+    color: #e11d48;
+    background: #fff1f2;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-weight: 500;
+}
+
+/* Modal รายละเอียด */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(6px);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+}
+
+.modal-card {
+    background: #ffffff;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 480px;
+    padding: 2rem;
+    position: relative;
+    text-align: center;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #f1f5f9;
+    border: none;
+    color: var(--text-muted);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.modal-close-btn:hover {
+    background: var(--primary-red);
+    color: #fff;
+}
+
+.modal-avatar-wrapper {
+    width: 110px;
+    height: 110px;
+    margin: 0 auto 1.25rem;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid var(--primary-red);
+    box-shadow: 0 6px 15px rgba(225, 29, 72, 0.25);
+}
+
+.modal-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.modal-name {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 6px;
+}
+
+.modal-role-badge {
+    display: inline-block;
+    background: var(--primary-red);
+    color: #ffffff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 4px 14px;
+    border-radius: 50px;
+    margin-bottom: 1.25rem;
+}
+
+.modal-info-box {
+    background: #f8fafc;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.modal-info-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.88rem;
+    color: var(--text-dark);
+}
+
+.modal-info-item i {
+    color: var(--primary-red);
+    width: 18px;
+    text-align: center;
+}
+
+.img-zoom-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+}
+
+.img-zoom-container {
+    position: relative;
+    max-width: 90%;
+    max-height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.img-zoom-content {
+    max-width: 100%;
+    max-height: 85vh;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    animation: zoomModalIn 0.25s ease-out;
+}
+
+@keyframes zoomModalIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.img-zoom-close {
+    position: absolute;
+    top: -45px;
+    right: 0;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: #ffffff;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.img-zoom-close:hover {
+    background: #e11d48;
+}
+
+/* เพิ่มลูกเล่นคลิกที่รูปใน Card แล้วมีไอคอนขยายเล็กน้อย */
+.head-img-wrapper {
+    position: relative;
+    cursor: pointer;
+}
+
+.head-img-wrapper::after {
+    content: '\f06e';
+    /* ไอคอนตา (FontAwesome) */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(225, 29, 72, 0.5);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    border-radius: 50%;
+}
+
+.head-img-wrapper:hover::after {
+    opacity: 1;
+}

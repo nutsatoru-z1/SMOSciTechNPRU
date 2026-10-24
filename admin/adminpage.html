@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบจัดการข้อมูล - สโมสรนักศึกษา คณะวิทยาศาสตร์และเทคโนโลยี</title>
+    <link rel="icon" type="image/jpeg" href="images/smologo.jpg">
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="adminstyle.css">
+</head>
+
+<body>
+
+    <header class="admin-header">
+        <div class="admin-brand">
+            <img src="images/smologo.jpg" alt="Logo" onerror="this.style.display='none'">
+            <span>ศูนย์จัดการข้อมูลสโมสรนักศึกษา (Admin Center)</span>
+        </div>
+        <a href="../index.html" class="btn-back-home">
+            <i class="fa-solid fa-arrow-left"></i> กลับสู่หน้าหลัก
+        </a>
+    </header>
+
+    <main class="full-wrapper">
+
+        <div class="admin-tabs">
+            <button class="tab-btn active" onclick="switchTab('activities', this)">
+                <i class="fa-solid fa-calendar-check"></i> โพสต์กิจกรรม
+            </button>
+            <button class="tab-btn" onclick="switchTab('announcements', this)">
+                <i class="fa-solid fa-bullhorn"></i> โพสต์ประกาศ
+            </button>
+            <button class="tab-btn" onclick="switchTab('chart', this)">
+                <i class="fa-solid fa-sitemap"></i> แผนผังสโมสร
+            </button>
+            <button class="tab-btn" onclick="switchTab('heads', this)">
+                <i class="fa-solid fa-users"></i> หัวหน้าหมู่เรียน
+            </button>
+        </div>
+
+        <!-- 1. TAB: โพสต์กิจกรรม -->
+        <div id="tab-activities" class="tab-content active">
+            <div class="form-card">
+                <div class="card-header-title" id="actFormTitle"><i class="fa-solid fa-plus-circle"></i>
+                    เพิ่มกิจกรรมใหม่</div>
+                <form id="formActivity">
+                    <input type="hidden" id="actEditIndex" value="-1">
+                    <input type="hidden" id="actImgBase64" value="">
+
+                    <div class="form-group">
+                        <label>ชื่อกิจกรรม</label>
+                        <input type="text" id="actTitle" class="form-control"
+                            placeholder="เช่น กิจกรรมบายศรีสู่ขวัญ 2569" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>วันจัดกิจกรรม (กำหนดได้หลายวัน)</label>
+                        <input type="text" id="actDate" class="form-control" placeholder="เช่น 15 - 18 พฤศจิกายน 2569"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>รูปภาพกิจกรรม (เลือกได้มากกว่า 1 รูป)</label>
+                        <div class="drop-zone">
+                            <i class="fa-solid fa-images"></i>
+                            <p id="actFileName">เลือกรูปภาพกิจกรรม</p>
+                            <input type="file" accept="image/*" multiple
+                                onchange="processMultipleImages(this, 'actImgBase64', 'actPreviewContainer', 'actFileName')">
+                        </div>
+                        <input type="hidden" id="actImgBase64">
+                        <div id="actPreviewContainer" style="display:flex; flex-wrap:wrap; gap:5px; margin-top:8px;">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>รายละเอียดกิจกรรม</label>
+                        <textarea id="actDesc" class="form-control" placeholder="กรอกรายละเอียด..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit"><i class="fa-solid fa-paper-plane"></i>
+                        บันทึกกิจกรรม</button>
+                    <button type="button" class="btn-cancel" id="actCancelBtn"
+                        onclick="resetActForm()">ยกเลิกการแก้ไข</button>
+                </form>
+            </div>
+
+            <div class="table-card">
+                <div class="card-header-title"><i class="fa-solid fa-list"></i> รายการกิจกรรมทั้งหมด</div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>รูปปก</th>
+                                <th>ชื่อกิจกรรม</th>
+                                <th>วันจัดกิจกรรม</th>
+                                <th>จัดการ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableActivities"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. TAB: โพสต์ประกาศ -->
+        <div id="tab-announcements" class="tab-content">
+            <div class="form-card">
+                <div class="card-header-title" id="annFormTitle"><i class="fa-solid fa-bullhorn"></i> เพิ่มประกาศใหม่
+                </div>
+                <form id="formAnnouncement">
+                    <input type="hidden" id="annEditIndex" value="-1">
+                    <input type="hidden" id="annImgBase64" value="">
+                    <input type="hidden" id="annDocBase64" value="">
+                    <input type="hidden" id="annDocName" value="">
+
+                    <div class="form-group">
+                        <label>หัวข้อประกาศ</label>
+                        <input type="text" id="annTitle" class="form-control"
+                            placeholder="เช่น ประกาศตารางสอบกลางภาค..." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>วันที่ประกาศ</label>
+                        <input type="date" id="annDate" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>รูปภาพหน้าปกประกาศ (ถ้ามี)</label>
+                        <div class="drop-zone">
+                            <i class="fa-solid fa-image"></i>
+                            <p id="annFileName">เลือกรูปภาพหน้าปกประกาศ</p>
+                            <input type="file" accept="image/*"
+                                onchange="processImage(this, 'annImgBase64', 'annPreview', 'annFileName')">
+                        </div>
+                        <img id="annPreview" class="image-preview" alt="Preview">
+                    </div>
+
+                    <div class="form-group">
+                        <label>รายละเอียดประกาศ</label>
+                        <textarea id="annDesc" class="form-control" placeholder="กรอกข้อความรายละเอียด..."
+                            required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>แนบไฟล์เอกสาร / ตารางสอบ (PDF, Word, Excel ฯลฯ)</label>
+                        <input type="file" class="form-control" accept=".pdf,.doc,.docx,.xls,.xlsx,.png,.jpg"
+                            onchange="processDoc(this)">
+                        <small id="annDocStatus"
+                            style="color:#60a5fa; font-size:0.8rem; display:block; margin-top:4px;"></small>
+                    </div>
+                    <!-- ------------------------------------------------------------------------- -->
+                    <!-- ช่องอัปโหลดรูปภาพเพิ่มเติมหลายรูป -->
+                    <div class="form-group">
+                        <label>รูปภาพเพิ่มเติม (เลือกได้หลายรูป)</label>
+                        <div class="drop-zone">
+                            <i class="fa-solid fa-images"></i>
+                            <p id="annExtraFileName">เลือกรูปภาพเพิ่มเติม (ถ้ามี)</p>
+                            <input type="file" accept="image/*" multiple
+                                onchange="processMultipleImages(this, 'annExtraImgsBase64', 'annExtraPreviewContainer', 'annExtraFileName')">
+                        </div>
+                        <input type="hidden" id="annExtraImgsBase64">
+                        <div id="annExtraPreviewContainer"
+                            style="display:flex; flex-wrap:wrap; gap:5px; margin-top:8px;"></div>
+                    </div>
+                    <!-- ------------------------------------------------------------------------- -->
+
+                    <button type="submit" class="btn-submit"><i class="fa-solid fa-paper-plane"></i>
+                        บันทึกประกาศ</button>
+                    <button type="button" class="btn-cancel" id="annCancelBtn"
+                        onclick="resetAnnForm()">ยกเลิกการแก้ไข</button>
+                </form>
+            </div>
+
+            <div class="table-card">
+                <div class="card-header-title"><i class="fa-solid fa-list"></i> รายการประกาศทั้งหมด</div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>รูปปก</th>
+                                <th>หัวข้อประกาศ</th>
+                                <th>วันที่</th>
+                                <th>ไฟล์แนบ</th>
+                                <th>จัดการ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableAnnouncements"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. TAB: แผนผังสโมสร -->
+        <div id="tab-chart" class="tab-content">
+            <div class="form-card">
+                <div class="card-header-title" id="chartFormTitle"><i class="fa-solid fa-user-plus"></i>
+                    เพิ่มสมาชิกสโมสรนักศึกษา</div>
+                <form id="formChart">
+                    <input type="hidden" id="chartEditIndex" value="-1">
+                    <input type="hidden" id="chartImgBase64" value="">
+
+                    <div class="form-group">
+                        <label>ชื่อ - นามสกุล</label>
+                        <input type="text" id="chartName" class="form-control" placeholder="เช่น นายสิทธิโชค ใจดี"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>ตำแหน่งในสโมสร</label>
+                        <input type="text" id="chartRole" class="form-control" placeholder="เช่น นายกสโมสรนักศึกษา"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>เบอร์โทรศัพท์ติดต่อ</label>
+                        <input type="text" id="chartPhone" class="form-control" placeholder="เช่น 081-234-5678"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label>ระดับตำแหน่งในผังองค์กร (สำหรับแยกชั้น Flowchart)</label>
+                        <select id="chartLevel" class="form-control" required>
+                            <option value="level1">ระดับ 1: นายกสโมสร</option>
+                            <option value="level2">ระดับ 2: รองนายกสโมสร</option>
+                            <option value="level3">ระดับ 3: หัวหน้าฝ่าย</option>
+                            <option value="level4" selected>ระดับ 4: คณะกรรมการ</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>รูปภาพประจำตัว</label>
+                        <div class="drop-zone">
+                            <i class="fa-solid fa-user-gear"></i>
+                            <p id="chartFileName">เลือกรูปโปรไฟล์</p>
+                            <input type="file" accept="image/*"
+                                onchange="processImage(this, 'chartImgBase64', 'chartPreview', 'chartFileName')">
+                        </div>
+                        <img id="chartPreview" class="image-preview" alt="Preview">
+                    </div>
+
+                    <button type="submit" class="btn-submit"><i class="fa-solid fa-floppy-disk"></i>
+                        บันทึกข้อมูลสมาชิก</button>
+                    <button type="button" class="btn-cancel" id="chartCancelBtn"
+                        onclick="resetChartForm()">ยกเลิกการแก้ไข</button>
+                </form>
+            </div>
+
+            <div class="table-card">
+                <div class="card-header-title"><i class="fa-solid fa-sitemap"></i> รายชื่อคณะกรรมการสโมสร</div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>รูปภาพ</th>
+                                <th>ชื่อ - นามสกุล</th>
+                                <th>ตำแหน่ง</th>
+                                <th>เบอร์ติดต่อ</th>
+                                <th>จัดการ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableChart"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. TAB: หัวหน้าหมู่เรียน -->
+        <div id="tab-heads" class="tab-content">
+            <div class="form-card">
+                <div class="card-header-title" id="headFormTitle"><i class="fa-solid fa-user-plus"></i>
+                    เพิ่มข้อมูลหัวหน้าหมู่เรียน</div>
+                <form id="formHead">
+                    <input type="hidden" id="headEditIndex" value="-1">
+                    <input type="hidden" id="headImgBase64" value="">
+
+                    <div class="form-group">
+                        <label>ชื่อ - นามสกุล</label>
+                        <input type="text" id="headName" class="form-control" placeholder="เช่น น.ส.กานดา มีสุข"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>หมู่เรียน (Section)</label>
+                        <input type="text" id="headSection" class="form-control" placeholder="เช่น 67/15" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>สาขาวิชา</label>
+                        <input type="text" id="headMajor" class="form-control" placeholder="เช่น วิทยาการคอมพิวเตอร์"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>รหัสรุ่น (เช่น 66, 67, 68, 69)</label>
+                        <input type="text" id="headBatch" class="form-control" placeholder="เช่น 67" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>เบอร์โทรศัพท์ติดต่อ</label>
+                        <input type="text" id="headPhone" class="form-control" placeholder="เช่น 092-345-6789" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>รูปภาพประจำตัว</label>
+                        <div class="drop-zone">
+                            <i class="fa-solid fa-id-badge"></i>
+                            <p id="headFileName">เลือกรูปโปรไฟล์</p>
+                            <input type="file" accept="image/*"
+                                onchange="processImage(this, 'headImgBase64', 'headPreview', 'headFileName')">
+                        </div>
+                        <img id="headPreview" class="image-preview" alt="Preview">
+                    </div>
+
+                    <button type="submit" class="btn-submit"><i class="fa-solid fa-floppy-disk"></i>
+                        บันทึกข้อมูล</button>
+                    <button type="button" class="btn-cancel" id="headCancelBtn"
+                        onclick="resetHeadForm()">ยกเลิกการแก้ไข</button>
+                </form>
+            </div>
+
+            <div class="table-card">
+                <div class="card-header-title"><i class="fa-solid fa-users"></i> รายชื่อหัวหน้าหมู่เรียนทั้งหมด</div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>รูปภาพ</th>
+                                <th>ชื่อ - นามสกุล</th>
+                                <th>หมู่เรียน / สาขา</th>
+                                <th>เบอร์ติดต่อ</th>
+                                <th>จัดการ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableHeads"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="admin.js"></script>
+</body>
+
+</html>

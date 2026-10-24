@@ -1,0 +1,82 @@
+/* Header Navbar */
+.header {
+    background: #0f172a;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.brand-logo {
+    display: flex;            /* ดันรูปกับข้อความให้อยู่บรรทัดเดียวกัน */
+    align-items: center;      /* จัดให้อยู่กึ่งกลางแนวตั้ง */
+    gap: 12px;               /* ระยะห่างระหว่างรูปโลโก้กับข้อความ */
+    text-decoration: none;    /* ลบขีดเส้นใต้ลิงก์ */
+    color: inherit;
+}
+
+.brand-logo img {
+    width: 42px;
+    height: 42px;
+    border-radius: 8px;       /* ทรงขอบมน */
+    object-fit: cover;
+    flex-shrink: 0;           /* ป้องกันรูปโดนบีบ */
+}
+
+.brand-title {
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #ffffff;
+}
+
+.brand-subtitle {
+    font-size: 0.78rem;
+    color: #94a3b8;
+    font-weight: 400;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 5px;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+ul.nav-menu li a.nav-link {
+    text-decoration: none;
+    color: #94a3b8;
+    font-weight: 500;
+    font-size: 0.88rem;
+    padding: 7px 18px;
+    border-radius: 50px;
+    transition: all 0.2s ease;
+    display: inline-block;
+    white-space: nowrap;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+ul.nav-menu li a.nav-link:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+ul.nav-menu li a.nav-link.active {
+    color: #ffffff !important;
+    background-color: #e11d48 !important;
+    font-weight: 600 !important;
+    box-shadow: 0 4px 15px rgba(225, 29, 72, 0.4) !important;
+}

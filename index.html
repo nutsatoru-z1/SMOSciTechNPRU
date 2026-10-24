@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สโมสรนักศึกษาคณะวิทยาศาสตร์และเทคโนโลยี มหาวิทยาลัยราชภัฏนครปฐม</title>
+    <link rel="icon" type="image/jpeg" href="images/titlelogoimg.png">
+
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link href="style.css" rel="stylesheet">
+    <link href="navbar.css" rel="stylesheet">
+    <link rel="stylesheet" href="footer.css">
+</head>
+
+<body>
+
+    <!-- Header Navbar -->
+    <header class="header">
+        <div class="full-wrapper navbar-container">
+            <a class="brand-logo">
+                <img src="images/smologo.jpg" alt="Logo" onerror="this.style.display='none'">
+                <div class="brand-text">
+                    <div class="brand-title">สโมสรนักศึกษา คณะวิทยาศาสตร์และเทคโนโลยี</div>
+                    <div class="brand-subtitle">มหาวิทยาลัยราชภัฏนครปฐม</div>
+                </div>
+            </a>
+            <nav>
+                <ul class="nav-menu" id="mainNavMenu">
+                    <li><a href="index.html" class="nav-link active">หน้าแรก</a></li>
+                    <li><a href="#announcements-section" class="nav-link">ข่าวสาร</a></li>
+                    <li><a href="#activities-section" class="nav-link">กิจกรรม</a></li>
+                    <li><a href="Aboutus/smochart.html" class="nav-link">สโมสรนักศึกษา</a></li>
+                    <li><a href="/leadsec/leadsecchart.html" class="nav-link">หัวหน้าหมู่เรียน</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Container ขยายเต็มกว้าง -->
+    <main class="main-container">
+        <!-- 2. ประชาสัมพันธ์ข่าวสาร -->
+        <section id="announcements-section" class="section-block">
+            <h2 class="section-title"><i class="fa-solid fa-bullhorn"></i> ประชาสัมพันธ์ข่าวสาร</h2>
+            <div id="announcementsGrid" class="cards-grid"></div>
+        </section>
+
+        <!-- 3. ประชาสัมพันธ์กิจกรรม -->
+        <section id="activities-section" class="section-block">
+            <h2 class="section-title"><i class="fa-regular fa-calendar-check"></i> ประชาสัมพันธ์กิจกรรม</h2>
+            <div id="activitiesGrid" class="cards-grid"></div>
+        </section>
+
+    </main>
+
+    <!-- Modal Popup รายละเอียด -->
+    <div id="detailModal" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-card">
+            <button class="modal-close-btn" onclick="closeModalDirect()"><i class="fa-solid fa-xmark"></i></button>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <!-- Modal ใส่รหัสผ่านเข้าสู่หน้าแอดมิน -->
+    <div id="adminAuthModal" class="admin-modal-overlay" onclick="closeAdminAuthModal(event)">
+        <div class="admin-modal-card">
+            <button class="admin-modal-close" onclick="closeAdminAuthModalDirect()">&times;</button>
+            <div class="admin-modal-icon">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <h3 class="admin-modal-title">ยืนยันสิทธิ์ผู้ดูแลระบบ</h3>
+            <p class="admin-modal-sub">กรุณากรอกรหัสผ่านเพื่อเข้าสู่หน้าจัดการระบบ</p>
+            <div class="admin-input-group">
+                <input type="password" id="adminPassInput" placeholder="กรอกรหัสผ่าน..."
+                    onkeyup="handleAdminPassKey(event)">
+                <button type="button" class="btn-submit-pass" onclick="verifyAdminPassword()">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+            <div id="adminAuthError" class="admin-error-msg"></div>
+        </div>
+    </div>
+
+    <footer id="contact" class="footer">
+        <div class="full-wrapper footer-container">
+            <div class="footer-grid">
+                <!-- คอลัมน์ 1: ข้อมูลสโมสรและช่องทางติดต่อ -->
+                <div class="footer-info-col">
+                    <div class="footer-brand-box">
+                        <img src="images/smologo.jpg" alt="SMO Logo" class="footer-smo-logo"
+                            onerror="this.style.display='none'">
+                        <div>
+                            <h3 class="footer-smo-title">สโมสรนักศึกษา คณะวิทยาศาสตร์และเทคโนโลยี</h3>
+                            <p class="footer-smo-sub">มหาวิทยาลัยราชภัฏนครปฐม</p>
+                        </div>
+                    </div>
+
+                    <ul class="footer-contact-list">
+                        <li>
+                            <i class="fa-solid fa-location-dot"></i>
+                            <a href="https://maps.google.com/?q=85+ถ.มาลัยแมน+ต.นครปฐม+อ.เมือง+จ.นครปฐม+73000"
+                                target="_blank" rel="noopener noreferrer" class="footer-contact-link">
+                                <span>85 ถ.มาลัยแมน ต.นครปฐม อ.เมือง จ.นครปฐม 73000</span>
+                            </a>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-phone"></i>
+                            <a href="tel:0984212022" id="footerPhoneLink" class="footer-contact-link">
+                                <span id="footerPhoneText">098 421 2022 (นายกสโมสรนักศึกษา)</span>
+                            </a>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-envelope"></i>
+                            <a href="mailto:smofacultyofscinpru@gmail.com" class="footer-contact-link">
+                                <span>smofacultyofscinpru@gmail.com</span>
+                            </a>
+                        </li>
+                        <li>
+                            <i class="fa-brands fa-facebook"></i>
+                            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer"
+                                class="footer-contact-link">
+                                <span>สโมสรนักศึกษาคณะวิทยาศาสตร์และเทคโนโลยี มหาวิทยาลัยราชภัฏนครปฐม</span>
+                            </a>
+                        </li>
+                        <li>
+                            <i class="fa-brands fa-instagram"></i>
+                            <a href="https://www.instagram.com/smosci_npru/?__pwa=1#" target="_blank"
+                                rel="noopener noreferrer" class="footer-contact-link">
+                                <span>smosci_npru</span>
+                            </a>
+                        </li>
+                        <li>
+                            <i class="fa-brands fa-tiktok"></i>
+                            <a href="https://www.tiktok.com/@smo_sci_npru" target="_blank" rel="noopener noreferrer"
+                                class="footer-contact-link">
+                                <span>SMO SCI NPRU</span>
+                            </a>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-building-user"></i>
+                            <span class="footer-contact-text">The student union of NPRU</span>
+                        </li>
+                    </ul>
+                    <br>
+
+                    <div class="footer-copyright-box">
+                        <p>Copyrights 2026 © Faculty of Science and Technology student club : NPRU. All rights reserved
+                        </p>
+                    </div>
+                </div>
+
+                <!-- คอลัมน์ 2: เมนูด่วนภายในเว็บ -->
+                <div class="footer-links-col">
+                    <h4 class="footer-col-title">เมนูด่วน</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="index.html"><i class="fa-solid fa-chevron-right"></i> หน้าแรก</a></li>
+                        <li><a href="#announcements-section"><i class="fa-solid fa-chevron-right"></i>
+                                ประชาสัมพันธ์ข่าวสาร</a></li>
+                        <li><a href="#activities-section"><i class="fa-solid fa-chevron-right"></i>
+                                ประชาสัมพันธ์กิจกรรม</a></li>
+                        <li><a href="Aboutus/smochart.html"><i class="fa-solid fa-chevron-right"></i> สโมสรนักศึกษา</a>
+                        </li>
+                        <li><a href="/leadsec/leadsecchart.html"><i class="fa-solid fa-chevron-right"></i>
+                                หัวหน้าหมู่เรียน</a></li>
+
+                    </ul>
+                </div>
+
+                <!-- คอลัมน์ 3: ลิงก์ภายนอกที่เกี่ยวข้อง -->
+                <div class="footer-links-col">
+                    <h4 class="footer-col-title">ลิงก์ที่เกี่ยวข้อง</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="https://sc.npru.ac.th/" target="_blank"><i class="fa-solid fa-chevron-right"></i>
+                                เว็บไซต์คณะวิทยาศาสตร์ฯ</a></li>
+                        <li><a href="https://www.npru.ac.th" target="_blank"><i class="fa-solid fa-chevron-right"></i>
+                                มหาวิทยาลัยราชภัฏนครปฐม</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-admin-trigger">
+            <button type="button" class="btn-admin-gear" onclick="openAdminAuthModal()"
+                title="ตั้งค่าระบบ / สำหรับแอดมิน">
+                <i class="fa-solid fa-gear"></i>
+            </button>
+        </div>
+    </footer>
+    <!-- --------------------------------------------------------------------------------------------- -->
+    <!-- Modal แสดงรายละเอียดโพสต์ -->
+    <div id="postDetailModal" class="modal-overlay" onclick="closePostModal()"
+        style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(15,23,42,0.8); z-index:9999; justify-content:center; align-items:center; padding:1rem;">
+        <div class="modal-card" onclick="event.stopPropagation()"
+            style="background:#fff; border-radius:16px; max-width:650px; width:100%; padding:2rem; position:relative; max-height:90vh; overflow-y:auto;">
+            <button onclick="closePostModal()"
+                style="position:absolute; top:15px; right:15px; background:#f1f5f9; border:none; width:36px; height:36px; border-radius:50%; font-size:1.2rem; cursor:pointer; color:#64748b;">&times;</button>
+
+            <h2 id="detailTitle" style="font-size:1.3rem; margin-bottom:6px; color:#1e293b;"></h2>
+            <p id="detailDate" style="color:#64748b; font-size:0.85rem; margin-bottom:1.25rem;"><i
+                    class="fa-regular fa-calendar"></i> <span id="dateText"></span></p>
+
+            <!-- รูปหลัก (คลิกเพื่อขยายได้) -->
+            <div
+                style="text-align:center; background:#0f172a; border-radius:12px; overflow:hidden; margin-bottom:1rem;">
+                <img id="detailMainImg" src="" style="width:100%; max-height:320px; object-fit:contain;">
+            </div>
+
+            <!-- กล่องสำหรับปุ่มดาวน์โหลดไฟล์เอกสาร -->
+            <div id="detailFileBox" style="margin-bottom:1rem; display:none;"></div>
+
+            <!-- กล่องสำหรับแสดงรูปภาพเพิ่มเติม / รูปกิจกรรมหลายรูป -->
+            <div id="detailExtraImagesBox" style="margin-bottom:1rem; display:none;"></div>
+
+            <p id="detailDesc" style="color:#334156; font-size:0.95rem; line-height:1.6; white-space:pre-line;"></p>
+        </div>
+    </div>
+
+    <!-- Modal สำหรับซูมขยายรูปภาพเต็มจอ -->
+    <div id="imageZoomModal" class="modal-overlay" onclick="closeImageZoom()"
+        style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.9); z-index:10000; justify-content:center; align-items:center; padding:1rem;">
+        <div style="position:relative; max-width:95%; max-height:95vh;" onclick="event.stopPropagation()">
+            <button onclick="closeImageZoom()"
+                style="position:absolute; top:-40px; right:0; background:none; border:none; color:#fff; font-size:2rem; cursor:pointer;">&times;</button>
+            <img id="zoomedImage" src=""
+                style="max-width:100%; max-height:85vh; object-fit:contain; border-radius:8px;">
+        </div>
+    </div>
+    <!-- -------------------------------------------------------------------- -->
+
+    <!-- JAVASCRIPT -->
+    <script src="system.js"></script>
+</body>
+
+</html>

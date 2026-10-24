@@ -1,0 +1,341 @@
+/* --- Footer ขยายเต็มหน้าจอ ไม่เหลือขอบข้าง --- */
+.footer {
+    background: #0f172a;
+    color: #94a3b8;
+    padding: 3.5rem 0 2rem;
+    font-size: 0.88rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    margin-top: auto;
+    width: 100%;
+    position: relative;
+}
+
+.footer-container {
+    width: 100%;
+    max-width: 100%;
+    /* ปลดล็อกขีดจำกัดความกว้าง */
+    padding: 0 4rem;
+    /* ระยะเว้นขอบจอพอดีๆ */
+    box-sizing: border-box;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    /* ปรับอัตราส่วนให้ฝั่งข้อมูลแผ่เต็มกว้างขึ้น */
+    gap: 3rem;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 2.5rem;
+}
+
+/* คอลัมน์ที่ 1: แบรนด์และช่องทางติดต่อ */
+.footer-info-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-brand-box {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 1.25rem;
+}
+
+.footer-smo-logo {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e11d48;
+    box-shadow: 0 4px 12px rgba(225, 29, 72, 0.25);
+}
+
+.footer-smo-title {
+    color: #ffffff;
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.footer-smo-sub {
+    color: #e11d48;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* รายการติดต่อ */
+.footer-contact-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.footer-contact-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.footer-contact-list i {
+    width: 20px;
+    text-align: center;
+    color: #e11d48;
+    font-size: 1rem;
+    flex-shrink: 0;
+    transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.footer-contact-list li:hover i {
+    transform: scale(1.2);
+    color: #ffffff;
+}
+
+.footer-contact-link {
+    color: #cbd5e1;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    display: inline-block;
+}
+
+.footer-contact-link:hover {
+    color: #ffffff;
+    transform: translateX(6px);
+}
+
+.footer-contact-text {
+    color: #cbd5e1;
+}
+
+/* คอลัมน์ที่ 2 & 3: เมนู */
+.footer-col-title {
+    color: #ffffff;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.footer-col-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 28px;
+    height: 3px;
+    background: #e11d48;
+    border-radius: 2px;
+}
+
+.footer-menu-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.footer-menu-list li a {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.25s ease;
+}
+
+.footer-menu-list li a i {
+    font-size: 0.75rem;
+    color: #e11d48;
+    transition: transform 0.2s ease;
+}
+
+.footer-menu-list li a:hover {
+    color: #ffffff;
+    transform: translateX(6px);
+}
+
+.footer-menu-list li a:hover i {
+    transform: translateX(2px);
+}
+
+/* แถบลิขสิทธิ์ด้านล่าง */
+.footer-copyright-box {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 1.5rem;
+    text-align: left;
+    font-size: 0.82rem;
+    color: #64748b;
+}
+
+.footer-admin-trigger {
+    position: absolute;
+    right: 20px;
+    bottom: 15px;
+    z-index: 10;
+}
+
+.btn-admin-gear {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #64748b;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-admin-gear:hover {
+    color: #ffffff;
+    background: #e11d48;
+    border-color: #e11d48;
+    transform: rotate(90deg) scale(1.1);
+    box-shadow: 0 4px 15px rgba(225, 29, 72, 0.4);
+}
+
+/* --- Admin Password Modal --- */
+.admin-modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(8px);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+.admin-modal-card {
+    background: #ffffff;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 380px;
+    padding: 2.2rem 2rem 1.8rem;
+    position: relative;
+    text-align: center;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    animation: adminModalPop 0.25s ease-out;
+}
+
+@keyframes adminModalPop {
+    from { opacity: 0; transform: scale(0.9) translateY(10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.admin-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #f1f5f9;
+    border: none;
+    color: #64748b;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.admin-modal-close:hover {
+    background: #e11d48;
+    color: #ffffff;
+}
+
+.admin-modal-icon {
+    width: 55px;
+    height: 55px;
+    background: rgba(225, 29, 72, 0.1);
+    color: #e11d48;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin: 0 auto 1.25rem;
+}
+
+.admin-modal-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 6px;
+}
+
+.admin-modal-sub {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin-bottom: 1.5rem;
+}
+
+.admin-input-group {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 0.5rem;
+}
+
+.admin-input-group input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.admin-input-group input:focus {
+    border-color: #e11d48;
+    box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.12);
+}
+
+.btn-submit-pass {
+    background: #e11d48;
+    color: #ffffff;
+    border: none;
+    padding: 0 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.2s;
+}
+
+.btn-submit-pass:hover {
+    background: #be123c;
+}
+
+.admin-error-msg {
+    color: #e11d48;
+    font-size: 0.82rem;
+    min-height: 20px;
+    margin-top: 6px;
+    font-weight: 500;
+}
+
+@media (max-width: 992px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+
+    .footer-container {
+        padding: 0 1.5rem;
+    }
+}

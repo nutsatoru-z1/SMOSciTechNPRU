@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>หัวหน้าหมู่เรียน - สโมสรนักศึกษา คณะวิทยาศาสตร์และเทคโนโลยี NPRU</title>
+    <!-- Google Fonts: Sarabun -->
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="head.css">
+    <link rel="stylesheet" href="/navbar.css">
+    <link rel="stylesheet" href="/footer.css">
+</head>
+
+<body>
+
+    <!-- Header Navbar -->
+    <header class="header">
+        <div class="full-wrapper navbar-container">
+            <a href="../index.html" class="brand-logo">
+                <img src="../images/smologo.jpg" alt="Logo" onerror="this.style.display='none'">
+                <div class="brand-text">
+                    <div class="brand-title">สโมสรนักศึกษา คณะวิทยาศาสตร์และเทคโนโลยี</div>
+                    <div class="brand-subtitle">มหาวิทยาลัยราชภัฏนครปฐม</div>
+                </div>
+            </a>
+            <nav>
+                <ul class="nav-menu" id="mainNavMenu">
+                    <li><a href="../index.html" class="nav-link">หน้าแรก</a></li>
+                    <li><a href="../index.html#announcements-section" class="nav-link">ข่าวสาร</a></li>
+                    <li><a href="../index.html#activities-section" class="nav-link">กิจกรรม</a></li>
+                    <li><a href="../Aboutus/smochart.html" class="nav-link">สโมสรนักศึกษา</a></li>
+                    <li><a href="leadsecchart.html" class="nav-link active">หัวหน้าหมู่เรียน</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <div class="full-wrapper" style="padding: 0;">
+            <div class="page-title-section">
+                <h1>หัวหน้าหมู่เรียน คณะวิทยาศาสตร์และเทคโนโลยี</h1>
+                <p>รายนามและช่องทางติดต่อประธาน/หัวหน้าหมู่เรียน จำแนกตามรหัสรุ่นนักศึกษา</p>
+            </div>
+
+            <!-- ปุ่ม Filter เลือกรหัสรุ่น (สร้างอัตโนมัติตามข้อมูลจาก Admin) -->
+            <div class="year-filter-wrapper" id="batchFilterContainer">
+                <button class="year-btn active" onclick="filterBatch('all', this)">
+                    <i class="fa-solid fa-layer-group"></i> ทั้งหมด
+                </button>
+            </div>
+
+            <!-- Grid แสดงรายการหัวหน้าหมู่เรียน (ดึงข้อมูลอัตโนมัติจากหน้าแอดมิน) -->
+            <div class="heads-grid" id="headsGridContainer">
+                <!-- โหลดข้อมูลอัตโนมัติผ่าน JavaScript -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal รายละเอียด -->
+    <div id="headDetailModal" class="modal-overlay" onclick="closeHeadModal(event)">
+        <div class="modal-card">
+            <button class="modal-close-btn" onclick="closeHeadModalDirect()">&times;</button>
+            <div class="modal-avatar-wrapper">
+                <img id="mHeadImg" src="" alt="Profile" class="modal-avatar-img"
+                    onerror="this.src='https://via.placeholder.com/150'">
+            </div>
+            <h3 id="mHeadName" class="modal-name">ชื่อ-นามสกุล</h3>
+            <span id="mHeadDept" class="modal-role-badge">สาขาวิชา</span>
+
+            <div class="modal-info-box">
+                <div class="modal-info-item">
+                    <i class="fa-solid fa-id-card"></i>
+                    <span id="mHeadId">รหัสนักศึกษา: -</span>
+                </div>
+                <div class="modal-info-item">
+                    <i class="fa-solid fa-phone"></i>
+                    <span id="mHeadPhone">เบอร์โทรศัพท์: -</span>
+                </div>
+                <div class="modal-info-item">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span id="mHeadEmail">อีเมล: -</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer id="contact" class="footer">
+        <div class="full-wrapper footer-container">
+            <div class="footer-grid">
+                <!-- คอลัมน์ 1: ข้อมูลสโมสรและช่องทางติดต่อ -->
+                <div class="footer-info-col">
+                    <div class="footer-brand-box">
+                        <img src="images/smologo.jpg" alt="SMO Logo" class="footer-smo-logo"
+                            onerror="this.style.display='none'">
+                        <div>
+                            <h3 class="footer-smo-title">สโมสรนักศึกษา คณะวิทยาศาสตร์และเทคโนโลยี</h3>
+                            <p class="footer-smo-sub">มหาวิทยาลัยราชภัฏนครปฐม</p>
+                        </div>
+                    </div>
+
+                    <ul class="footer-contact-list">
+                        <li>
+                            <i class="fa-solid fa-location-dot"></i>
+                            <a href="https://maps.google.com/?q=85+ถ.มาลัยแมน+ต.นครปฐม+อ.เมือง+จ.นครปฐม+73000"
+                                target="_blank" rel="noopener noreferrer" class="footer-contact-link">
+                                <span>85 ถ.มาลัยแมน ต.นครปฐม อ.เมือง จ.นครปฐม 73000</span>
+                            </a>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-phone"></i>
+                            <a href="tel:0984212022" class="footer-contact-link">
+                                <span>098 421 2022 (นายกสโมสรนักศึกษา)</span>
+                            </a>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-envelope"></i>
+                            <a href="mailto:smofacultyofscinpru@gmail.com" class="footer-contact-link">
+                                <span>smofacultyofscinpru@gmail.com</span>
+                            </a>
+                        </li>
+                        <li>
+                            <i class="fa-brands fa-facebook"></i>
+                            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer"
+                                class="footer-contact-link">
+                                <span>สโมสรนักศึกษาคณะวิทยาศาสตร์และเทคโนโลยี มหาวิทยาลัยราชภัฏนครปฐม</span>
+                            </a>
+                        </li>
+                        <li>
+                            <i class="fa-brands fa-instagram"></i>
+                            <a href="https://www.instagram.com/smosci_npru/?__pwa=1#" target="_blank"
+                                rel="noopener noreferrer" class="footer-contact-link">
+                                <span>smosci_npru</span>
+                            </a>
+                        </li>
+                        <li>
+                            <i class="fa-brands fa-tiktok"></i>
+                            <a href="https://www.tiktok.com/@smo_sci_npru" target="_blank" rel="noopener noreferrer"
+                                class="footer-contact-link">
+                                <span>SMO SCI NPRU</span>
+                            </a>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-building-user"></i>
+                            <span class="footer-contact-text">The student union of NPRU</span>
+                        </li>
+                    </ul>
+                    <br>
+
+                    <div class="footer-copyright-box">
+                        <p>Copyrights 2026 © Faculty of Science and Technology student club : NPRU. All rights reserved
+                        </p>
+                    </div>
+                </div>
+
+                <!-- คอลัมน์ 2: เมนูด่วนภายในเว็บ -->
+                <div class="footer-links-col">
+                    <h4 class="footer-col-title">เมนูด่วน</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="/index.html"><i class="fa-solid fa-chevron-right"></i> หน้าแรก</a></li>
+                        <li><a href="/index.html#announcements-section"><i class="fa-solid fa-chevron-right"></i>
+                                ประชาสัมพันธ์ข่าวสาร</a></li>
+                        <li><a href="/index.html#activities-section"><i class="fa-solid fa-chevron-right"></i>
+                                ประชาสัมพันธ์กิจกรรม</a></li>
+                        <li><a href="/Aboutus/smochart.html"><i class="fa-solid fa-chevron-right"></i> สโมสรนักศึกษา</a>
+                        </li>
+                        <li><a href="leadsecchart.html"><i class="fa-solid fa-chevron-right"></i>
+                                หัวหน้าหมู่เรียน</a></li>
+                        
+                    </ul>
+                </div>
+
+                <!-- คอลัมน์ 3: ลิงก์ภายนอกที่เกี่ยวข้อง -->
+                <div class="footer-links-col">
+                    <h4 class="footer-col-title">ลิงก์ที่เกี่ยวข้อง</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="https://sc.npru.ac.th/" target="_blank"><i class="fa-solid fa-chevron-right"></i>
+                                เว็บไซต์คณะวิทยาศาสตร์ฯ</a></li>
+                        <li><a href="https://www.npru.ac.th" target="_blank"><i class="fa-solid fa-chevron-right"></i>
+                                มหาวิทยาลัยราชภัฏนครปฐม</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-admin-trigger">
+            <button type="button" class="btn-admin-gear" onclick="openAdminAuthModal()"
+                title="ตั้งค่าระบบ / สำหรับแอดมิน">
+                <i class="fa-solid fa-gear"></i>
+            </button>
+        </div>
+    </footer>
+
+    <!-- Admin Modal -->
+    <div id="adminAuthModal" class="admin-modal-overlay" onclick="closeAdminAuthModal(event)">
+        <div class="admin-modal-card">
+            <button class="admin-modal-close" onclick="closeAdminAuthModalDirect()">&times;</button>
+            <div class="admin-modal-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <h3 style="margin-bottom: 6px;">ยืนยันสิทธิ์ผู้ดูแลระบบ</h3>
+            <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 1rem;">
+                กรุณากรอกรหัสผ่านเพื่อเข้าสู่หน้าจัดการระบบ</p>
+            <div class="admin-input-group">
+                <input type="password" id="adminPassInput" placeholder="รหัสผ่าน..."
+                    onkeyup="if(event.key==='Enter')verifyAdminPassword()">
+                <button type="button" class="btn-submit-pass" onclick="verifyAdminPassword()"><i
+                        class="fa-solid fa-arrow-right"></i></button>
+            </div>
+            <div id="adminAuthError" style="color: #e11d48; font-size: 0.8rem; margin-top: 8px; min-height: 18px;">
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal สำหรับคลิกขยายรูปภาพ -->
+    <div id="imageZoomModal" class="img-zoom-overlay" onclick="closeImageZoom(event)">
+        <div class="img-zoom-container">
+            <button class="img-zoom-close" onclick="closeImageZoomDirect()">&times;</button>
+            <img id="zoomedImage" src="" alt="Zoomed Profile" class="img-zoom-content">
+        </div>
+    </div>
+
+    <!-- Script ดึงข้อมูลจาก Admin / localStorage และจัดกลุ่มตามรหัสรุ่น -->
+    <script src="head.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เกี่ยวกับสโมสร - สโมสรนักศึกษา คณะวิทยาศาสตร์และเทคโนโลยี</title>
+    <link rel="icon" type="image/jpeg" href="../images/smologo.jpg">
+
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="smostyle.css">
+    <link rel="stylesheet" href="/navbar.css">
+    <link rel="stylesheet" href="/footer.css">
+</head>
+
+<body>
+
+    <!-- Header Navbar -->
+    <header class="header">
+        <div class="full-wrapper navbar-container">
+            <a class="brand-logo">
+                <img src="../images/smologo.jpg" alt="Logo" onerror="this.style.display='none'">
+                <div class="brand-text">
+                    <div class="brand-title">สโมสรนักศึกษา คณะวิทยาศาสตร์และเทคโนโลยี</div>
+                    <div class="brand-subtitle">มหาวิทยาลัยราชภัฏนครปฐม</div>
+                </div>
+            </a>
+
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="../index.html" class="nav-link">หน้าแรก</a></li>
+                    <li><a href="../index.html#announcements-section" class="nav-link">ข่าวสาร</a></li>
+                    <li><a href="../index.html#activities-section" class="nav-link">กิจกรรม</a></li>
+                    <li><a href="smochart.html" class="nav-link active">สโมสรนักศึกษา</a></li>
+                    <li><a href="../leadsec/leadsecchart.html" class="nav-link">หัวหน้าหมู่เรียน</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Section -->
+    <main class="main-container">
+        <div class="page-header">
+            <h1 class="page-title"><i class="fa-solid fa-sitemap" style="color: var(--primary-red);"></i>
+                แผนผังองค์กรสโมสรนักศึกษา</h1>
+            <p class="page-subtitle">โครงสร้างสายงานคณะกรรมการและฝ่ายบริหาร สโมสรนักศึกษา</p>
+        </div>
+
+        <div class="flowchart-wrapper" id="flowchartWrapper"></div>
+    </main>
+
+    <!-- Modal Popup รายละเอียดสมาชิก -->
+    <div id="memberModal" class="modal-overlay">
+        <div class="modal-card">
+            <button class="modal-close-btn" id="closeMemberModalBtn"><i class="fa-solid fa-xmark"></i></button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- Lightbox Popup ขยายรูปเต็มจอ -->
+    <div id="imageLightbox" class="lightbox-overlay">
+        <button class="lightbox-close-btn" id="closeLightboxBtn"><i class="fa-solid fa-xmark"></i></button>
+        <img id="lightboxImg" src="" alt="Full Size Preview">
+    </div>
+
+    <!-- Footer สโมสรนักศึกษา -->
+    <footer id="contact" class="footer">
+        <div class="full-wrapper footer-container">
+            <div class="footer-grid">
+                <!-- คอลัมน์ 1: ข้อมูลสโมสรและช่องทางติดต่อ -->
+                <div class="footer-info-col">
+                    <div class="footer-brand-box">
+                        <img src="images/smologo.jpg" alt="SMO Logo" class="footer-smo-logo"
+                            onerror="this.style.display='none'">
+                        <div>
+                            <h3 class="footer-smo-title">สโมสรนักศึกษา คณะวิทยาศาสตร์และเทคโนโลยี</h3>
+                            <p class="footer-smo-sub">มหาวิทยาลัยราชภัฏนครปฐม</p>
+                        </div>
+                    </div>
+
+                    <ul class="footer-contact-list">
+                        <li>
+                            <i class="fa-solid fa-location-dot"></i>
+                            <a href="https://maps.google.com/?q=85+ถ.มาลัยแมน+ต.นครปฐม+อ.เมือง+จ.นครปฐม+73000"
+                                target="_blank" rel="noopener noreferrer" class="footer-contact-link">
+                                <span>85 ถ.มาลัยแมน ต.นครปฐม อ.เมือง จ.นครปฐม 73000</span>
+                            </a>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-phone"></i>
+                            <a href="tel:0984212022" class="footer-contact-link">
+                                <span>098 421 2022 (นายกสโมสรนักศึกษา)</span>
+                            </a>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-envelope"></i>
+                            <a href="mailto:smofacultyofscinpru@gmail.com" class="footer-contact-link">
+                                <span>smofacultyofscinpru@gmail.com</span>
+                            </a>
+                        </li>
+                        <li>
+                            <i class="fa-brands fa-facebook"></i>
+                            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer"
+                                class="footer-contact-link">
+                                <span>สโมสรนักศึกษาคณะวิทยาศาสตร์และเทคโนโลยี มหาวิทยาลัยราชภัฏนครปฐม</span>
+                            </a>
+                        </li>
+                        <li>
+                            <i class="fa-brands fa-instagram"></i>
+                            <a href="https://www.instagram.com/smosci_npru/?__pwa=1#" target="_blank"
+                                rel="noopener noreferrer" class="footer-contact-link">
+                                <span>smosci_npru</span>
+                            </a>
+                        </li>
+                        <li>
+                            <i class="fa-brands fa-tiktok"></i>
+                            <a href="https://www.tiktok.com/@smo_sci_npru" target="_blank" rel="noopener noreferrer"
+                                class="footer-contact-link">
+                                <span>SMO SCI NPRU</span>
+                            </a>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-building-user"></i>
+                            <span class="footer-contact-text">The student union of NPRU</span>
+                        </li>
+                    </ul>
+                    <br>
+
+                    <div class="footer-copyright-box">
+                        <p>Copyrights 2026 © Faculty of Science and Technology student club : NPRU. All rights reserved
+                        </p>
+                    </div>
+                </div>
+
+                <!-- คอลัมน์ 2: เมนูด่วนภายในเว็บ -->
+                <div class="footer-links-col">
+                    <h4 class="footer-col-title">เมนูด่วน</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="../index.html"><i class="fa-solid fa-chevron-right"></i> หน้าแรก</a></li>
+                        <li><a href="../index.html#announcements-section"><i class="fa-solid fa-chevron-right"></i>
+                                ประชาสัมพันธ์ข่าวสาร</a></li>
+                        <li><a href="../index.html#activities-section"><i class="fa-solid fa-chevron-right"></i>
+                                ประชาสัมพันธ์กิจกรรม</a></li>
+                        <li><a href="Aboutus/smochart.html"><i class="fa-solid fa-chevron-right"></i> สโมสรนักศึกษา</a>
+                        </li>
+                        <li><a href="/leadsec/leadsecchart.html"><i class="fa-solid fa-chevron-right"></i>
+                                หัวหน้าหมู่เรียน</a></li>
+
+                    </ul>
+                </div>
+
+                <!-- คอลัมน์ 3: ลิงก์ภายนอกที่เกี่ยวข้อง -->
+                <div class="footer-links-col">
+                    <h4 class="footer-col-title">ลิงก์ที่เกี่ยวข้อง</h4>
+                    <ul class="footer-menu-list">
+                        <li><a href="https://sc.npru.ac.th/" target="_blank"><i class="fa-solid fa-chevron-right"></i>
+                                เว็บไซต์คณะวิทยาศาสตร์ฯ</a></li>
+                        <li><a href="https://www.npru.ac.th" target="_blank"><i class="fa-solid fa-chevron-right"></i>
+                                มหาวิทยาลัยราชภัฏนครปฐม</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-admin-trigger">
+            <button type="button" class="btn-admin-gear" onclick="openAdminAuthModal()"
+                title="ตั้งค่าระบบ / สำหรับแอดมิน">
+                <i class="fa-solid fa-gear"></i>
+            </button>
+        </div>
+    </footer>
+
+    <!-- Admin Modal -->
+    <div id="adminAuthModal" class="admin-modal-overlay" onclick="closeAdminAuthModal(event)">
+        <div class="admin-modal-card">
+            <button class="admin-modal-close" onclick="closeAdminAuthModalDirect()">&times;</button>
+            <div class="admin-modal-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <h3 style="margin-bottom: 6px;">ยืนยันสิทธิ์ผู้ดูแลระบบ</h3>
+            <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 1rem;">
+                กรุณากรอกรหัสผ่านเพื่อเข้าสู่หน้าจัดการระบบ</p>
+            <div class="admin-input-group">
+                <input type="password" id="adminPassInput" placeholder="รหัสผ่าน..."
+                    onkeyup="if(event.key==='Enter')verifyAdminPassword()">
+                <button type="button" class="btn-submit-pass" onclick="verifyAdminPassword()"><i
+                        class="fa-solid fa-arrow-right"></i></button>
+            </div>
+            <div id="adminAuthError" style="color: #e11d48; font-size: 0.8rem; margin-top: 8px; min-height: 18px;">
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="smo.js"></script>
+</body>
+
+</html>
