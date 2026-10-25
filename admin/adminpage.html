@@ -43,6 +43,10 @@
             <button class="tab-btn" onclick="switchTab('heads', this)">
                 <i class="fa-solid fa-users"></i> หัวหน้าหมู่เรียน
             </button>
+            <button class="tab-btn" onclick="switchTab('banners', this)">
+                <i class="fa-solid fa-image"></i> จัดการแบนเนอร์
+            </button>
+
         </div>
 
         <!-- 1. TAB: โพสต์กิจกรรม -->
@@ -340,6 +344,69 @@
                         </thead>
                         <tbody id="tableHeads"></tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. TAB: จัดการแบนเนอร์ (Hero Banner) -->
+        <div id="tab-banners" class="tab-content">
+            <div class="form-card">
+                <div class="card-header-title"><i class="fa-solid fa-image"></i> เพิ่มภาพแบนเนอร์ใหม่</div>
+                <div class="form-group">
+                    <label><p>เลือกรูปภาพแบนเนอร์</p> 
+                        ขนาดความกว้างแนะนำ 1920 × ความสูง 650 พิกเซล</label>
+                    <div class="drop-zone">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        <p id="adminBannerFileName">เลือกรูปภาพแบนเนอร์</p>
+                        <input type="file" id="adminBannerInput" accept="image/*" onchange="previewBannerImage(event)">
+                    </div>
+                    <input type="hidden" id="adminBannerBase64">
+                    <img id="adminBannerPreview" class="image-preview" alt="Preview">
+                </div>
+                <button type="button" class="btn-submit" onclick="addNewBanner()">
+                    <i class="fa-solid fa-paper-plane"></i> เพิ่มแบนเนอร์ใหม่
+                </button>
+            </div>
+
+            <div class="table-card">
+                <div class="card-header-title"><i class="fa-solid fa-list"></i> รายการแบนเนอร์ทั้งหมด</div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>รูปภาพ</th>
+                                <th>ชื่อไฟล์ / แหล่งที่มา</th>
+                                <th style="text-align: center;">จัดการ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminBannerTableBody">
+                            <!-- รายการจะถูกเรนเดอร์ผ่าน JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal สำหรับแก้ไขแบนเนอร์ -->
+        <div id="editBannerModal" class="admin-modal" style="display: none;">
+            <div class="admin-modal-content">
+                <h3>แก้ไขภาพแบนเนอร์</h3>
+                <input type="hidden" id="editBannerIndex">
+                <div class="form-group" style="margin: 1rem 0;">
+                    <label>รูปภาพปัจจุบัน:</label>
+                    <div style="margin: 8px 0;">
+                        <img id="editBannerPreview" src="" alt="Preview"
+                            style="width: 100%; max-height: 150px; object-fit: cover; border-radius: 8px;">
+                    </div>
+                    <label>เปลี่ยนรูปภาพใหม่ (ถ้าต้องการ):</label>
+                    <input type="file" id="editBannerInputFile" accept="image/*"
+                        onchange="previewEditBannerImage(event)">
+                    <input type="hidden" id="editBannerNewBase64">
+                </div>
+                <div class="admin-modal-actions" style="display: flex; gap: 10px; justify-content: flex-end;">
+                    <button class="btn-cancel" style="display:block; margin:0;"
+                        onclick="closeEditBannerModal()">ยกเลิก</button>
+                    <button class="btn-submit" style="margin:0;" onclick="updateBannerData()">บันทึกการแก้ไข</button>
                 </div>
             </div>
         </div>

@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="head.css">
     <link rel="stylesheet" href="/navbar.css">
     <link rel="stylesheet" href="/footer.css">
-    <link rel="stylesheet" href="/Responsive.css">
+    <link rel="stylesheet" href="/dropbar.css">
 
 </head>
 
@@ -30,6 +30,22 @@
                     <div class="brand-subtitle">มหาวิทยาลัยราชภัฏนครปฐม</div>
                 </div>
             </a>
+
+            <!-- ปุ่ม 3 ขีดสำหรับมือถือ -->
+            <button class="mobile-menu-toggle" onclick="toggleMobileDropdown(event)" aria-label="เปิดเมนู">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <!-- กล่องตัวเลือกเมนู Dropdown สำหรับมือถือ -->
+            <div id="mobileDropdownMenu" class="mobile-dropdown-menu">
+                <a href="../index.html" class="dropdown-item">หน้าแรก</a>
+                <a href="../index.html#announcements-section" class="dropdown-item">ข่าวสาร</a>
+                <a href="../index.html#activities-section" class="dropdown-item">กิจกรรม</a>
+                <a href="../Aboutus/smochart.html" class="dropdown-item">สโมสรนักศึกษา</a>
+                <a href="leadsecchart.html" class="dropdown-item active">หัวหน้าหมู่เรียน</a>
+            </div>
+
+            <!-- เมนูคอมพิวเตอร์ (PC) - สังเกตว่าหน้าหัวหน้าหมู่เรียนให้ใส่ class="nav-link active" ที่ปุ่ม "หัวหน้าหมู่เรียน" -->
             <nav>
                 <ul class="nav-menu" id="mainNavMenu">
                     <li><a href="../index.html" class="nav-link">หน้าแรก</a></li>
@@ -226,6 +242,7 @@
 
     <!-- Script ดึงข้อมูลจาก Admin / localStorage และจัดกลุ่มตามรหัสรุ่น -->
     <script src="head.js"></script>
+    <script src="/dropbar.js"></script>
 </body>
 
 </html>

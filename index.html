@@ -17,63 +17,58 @@
     <link href="style.css" rel="stylesheet">
     <link href="navbar.css" rel="stylesheet">
     <link rel="stylesheet" href="footer.css">
-    <link rel="stylesheet" href="Responsive.css">
-    <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="dropbar.css">
 </head>
 
 <body>
 
-    <!-- Header Navbar -->
     <header class="header">
-
         <div class="full-wrapper navbar-container">
-            <!-- ปรับลิงก์โลโก้ให้กดเปิด Sidebar บนมือถือได้ -->
-            <a class="brand-logo" onclick="toggleSidebarMobile(event)">
+            <a class="brand-logo">
                 <img src="images/smologo.jpg" alt="Logo" onerror="this.style.display='none'">
                 <div class="brand-text">
                     <div class="brand-title">สโมสรนักศึกษา คณะวิทยาศาสตร์และเทคโนโลยี</div>
                     <div class="brand-subtitle">มหาวิทยาลัยราชภัฏนครปฐม</div>
                 </div>
             </a>
+
+            <!-- ปุ่ม 3 ขีดสำหรับมือถือ -->
+            <button class="mobile-menu-toggle" onclick="toggleMobileDropdown(event)" aria-label="เปิดเมนู">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <!-- กล่องตัวเลือกเมนูแบบ Dropdown (ซ่อนไว้ก่อน และจะแสดงเมื่อกดปุ่ม) -->
+            <div id="mobileDropdownMenu" class="mobile-dropdown-menu">
+                <a href="index.html" class="dropdown-item active">หน้าแรก</a>
+                <a href="#announcements-section" class="dropdown-item">ข่าวสาร</a>
+                <a href="#activities-section" class="dropdown-item">กิจกรรม</a>
+                <a href="Aboutus/smochart.html" class="dropdown-item">สโมสรนักศึกษา</a>
+                <a href="/leadsec/leadsecchart.html" class="dropdown-item">หัวหน้าหมู่เรียน</a>
+            </div>
+
+            <!-- เมนูคอมพิวเตอร์ (PC) ปกติ -->
             <nav>
                 <ul class="nav-menu" id="mainNavMenu">
                     <li><a href="index.html" class="nav-link active">หน้าแรก</a></li>
                     <li><a href="#announcements-section" class="nav-link">ข่าวสาร</a></li>
                     <li><a href="#activities-section" class="nav-link">กิจกรรม</a></li>
                     <li><a href="Aboutus/smochart.html" class="nav-link">สโมสรนักศึกษา</a></li>
-                    <li><a href="/leadsec/leadsecchart.html" class="nav-link">หัวหน้าหมู่เรียน</a></li>
+                    <li><a href="leadsec/leadsecchart.html" class="nav-link">หัวหน้าหมู่เรียน</a></li>
                 </ul>
             </nav>
         </div>
-
-
-        <!-- โครงสร้าง Sidebar สำหรับมือถือ -->
-        <div id="mobileSidebar" class="mobile-sidebar">
-            <div class="sidebar-header">
-                <div class="brand-logo">
-                    <img src="images/smologo.jpg" alt="Logo" onerror="this.style.display='none'">
-                    <div class="brand-text">
-                        <div class="brand-title" style="font-size:0.9rem;">สโมสรนักศึกษา</div>
-                        <div class="brand-subtitle">คณะวิทยาศาสตร์ฯ NPRU</div>
-                    </div>
-                </div>
-                <button class="sidebar-close-btn" onclick="toggleSidebar()"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <ul class="sidebar-menu">
-                <li><a href="index.html" class="nav-link active" onclick="toggleSidebar()">หน้าแรก</a></li>
-                <li><a href="#announcements-section" class="nav-link" onclick="toggleSidebar()">ข่าวสาร</a></li>
-                <li><a href="#activities-section" class="nav-link" onclick="toggleSidebar()">กิจกรรม</a></li>
-                <li><a href="Aboutus/smochart.html" class="nav-link" onclick="toggleSidebar()">สโมสรนักศึกษา</a></li>
-                <li><a href="/leadsec/leadsecchart.html" class="nav-link" onclick="toggleSidebar()">หัวหน้าหมู่เรียน</a>
-                </li>
-            </ul>
-        </div>
-        <!-- พื้นหลังสีดำจางๆ เวลาเปิด Sidebar -->
-        <div id="sidebarOverlay" class="sidebar-overlay" onclick="toggleSidebar()"></div>
     </header>
+
 
     <!-- Main Content Container ขยายเต็มกว้าง -->
     <main class="main-container">
+        <!-- ส่วนแสดงภาพแบนเนอร์สไลด์เต็มจอ (Banner Hero Slider) -->
+        <section class="banner-hero-section">
+            <div id="adminBannerSlider" class="banner-hero-container">
+                <!-- ภาพแบนเนอร์จะถูกดึงข้อมูลจาก localStorage มาแสดงผลอัตโนมัติ -->
+            </div>
+        </section>
+        <br><br>
         <!-- 2. ประชาสัมพันธ์ข่าวสาร -->
         <section id="announcements-section" class="section-block">
             <h2 class="section-title"><i class="fa-solid fa-bullhorn"></i> ประชาสัมพันธ์ข่าวสาร</h2>
@@ -263,6 +258,7 @@
 
     <!-- JAVASCRIPT -->
     <script src="system.js"></script>
+    <script src="dropbar.js"></script>
 </body>
 
 </html>

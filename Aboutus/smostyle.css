@@ -1,10 +1,10 @@
 :root {
     --primary-red: #e11d48;
     --bg-dark: #0f172a;
-    --card-bg: #1e293b;
-    --text-light: #f8fafc;
-    --text-muted: #94a3b8;
-    --border-color: rgba(255, 255, 255, 0.08);
+    --card-bg: #ffffff; /* เปลี่ยนการ์ดหลักเป็นสีขาว */
+    --text-light: #0f172a; /* เปลี่ยนข้อความหลักเป็นสีเข้ม */
+    --text-muted: #64748b; /* สีข้อความรองให้อ่านง่าย */
+    --border-color: #e2e8f0; /* สีขอบเส้นเบาๆ */
     --radius: 12px;
     --line-color: #e11d48;
 }
@@ -16,12 +16,13 @@
     font-family: 'Sarabun', sans-serif;
 }
 
+/* พื้นหลังของหน้าสโมสรเป็นลายตารางสีขาว */
 body {
-    background-color: var(--bg-dark);
-    color: var(--text-light);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+    background-color: #f8fafc !important;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px) !important;
+    background-size: 24px 24px !important;
+    color: #1e293b !important;
 }
 
 .full-wrapper {
@@ -48,7 +49,7 @@ body {
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
-    color: #fff;
+    color: #0f172a !important; /* ปรับหัวข้อหน้าเป็นสีเข้ม */
 }
 
 .page-subtitle {
@@ -79,50 +80,56 @@ body {
     text-align: center;
     font-size: 0.9rem;
     font-weight: 700;
-    color: #94a3b8;
+    color: #64748b;
     letter-spacing: 1px;
     margin-bottom: 0.75rem;
 }
 
-/* Node Cards */
+/* --- ปรับแต่งการ์ดสมาชิกให้โดดเด่นและมีมิติยิ่งขึ้น --- */
 .node-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius);
-    padding: 1.25rem 1rem;
-    width: 230px;
+    background: #ffffff !important;
+    border: 2px solid #cbd5e1 !important; /* เพิ่มความชัดของเส้นขอบการ์ด */
+    border-radius: 16px;
+    padding: 1.5rem 1rem;
+    width: 240px;
     text-align: center;
     position: relative;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-    transition: all 0.25s ease;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08) !important; /* เพิ่มเงาให้การ์ดดูลอยเด่นขึ้น */
+    transition: all 0.3s ease;
     cursor: pointer;
 }
 
 .node-card:hover {
-    transform: translateY(-5px);
-    border-color: var(--primary-red);
-    box-shadow: 0 12px 30px rgba(225, 29, 72, 0.25);
+    transform: translateY(-6px);
+    border-color: var(--primary-red) !important;
+    box-shadow: 0 20px 40px rgba(225, 29, 72, 0.2) !important; /* เงาสีแดงเรืองแสงเมื่อเอาเมาส์ชี้ */
 }
 
+/* เน้นการ์ดตำแหน่งสูงสุด (นายกสโมสร) ให้เด่นชัดเป็นพิเศษ */
 .node-card.level-president {
-    border: 2px solid var(--primary-red);
-    background: linear-gradient(180deg, rgba(225, 29, 72, 0.15) 0%, #1e293b 100%);
-    width: 260px;
+    border: 2px solid var(--primary-red) !important;
+    background: linear-gradient(135deg, #ffffff 0%, #fff1f2 100%) !important;
+    width: 270px;
+    box-shadow: 0 20px 40px rgba(225, 29, 72, 0.15) !important;
 }
 
+/* เน้นการ์ดรองนายก */
 .node-card.level-vice {
-    border: 1px solid rgba(225, 29, 72, 0.6);
-    width: 240px;
+    border: 2px solid rgba(225, 29, 72, 0.5) !important;
+    background: linear-gradient(135deg, #ffffff 0%, #fffafb 100%) !important;
+    width: 250px;
 }
 
+/* กรอบรูปโปรไฟล์ในตัวการ์ด */
 .avatar-box {
-    width: 85px;
-    height: 85px;
+    width: 90px;
+    height: 90px;
     margin: 0 auto 0.85rem;
     border-radius: 50%;
     overflow: hidden;
-    border: 2px solid var(--primary-red);
-    background: #0f172a;
+    border: 3px solid var(--primary-red);
+    box-shadow: 0 6px 15px rgba(225, 29, 72, 0.2);
+    background: #f1f5f9;
 }
 
 .avatar-box img {
@@ -134,7 +141,7 @@ body {
 .node-name {
     font-size: 1rem;
     font-weight: 700;
-    color: #fff;
+    color: #0f172a !important;
     margin-bottom: 4px;
 }
 
@@ -147,7 +154,7 @@ body {
 
 .node-phone {
     font-size: 0.78rem;
-    color: var(--text-muted);
+    color: #64748b !important;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -161,15 +168,15 @@ body {
     margin: 0 auto;
     position: relative;
     z-index: 1;
-    box-shadow: 0 0 8px rgba(225, 29, 72, 0.5);
+    box-shadow: 0 0 8px rgba(225, 29, 72, 0.3);
 }
 
 .empty-state {
     text-align: center;
     padding: 4rem 2rem;
-    background: var(--card-bg);
+    background: #ffffff;
     border-radius: var(--radius);
-    border: 1px dashed var(--border-color);
+    border: 1px dashed #cbd5e1;
     color: var(--text-muted);
     max-width: 500px;
     margin: 0 auto;
@@ -183,7 +190,7 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(15, 23, 42, 0.85);
+    background: rgba(15, 23, 42, 0.6);
     backdrop-filter: blur(8px);
     z-index: 1000;
     justify-content: center;
@@ -192,15 +199,15 @@ body {
 }
 
 .modal-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
     border-radius: 24px;
     width: 100%;
     max-width: 540px;
     padding: 3rem 2rem;
     text-align: center;
     position: relative;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15) !important;
     animation: modalFadeIn 0.25s ease-out;
 }
 
@@ -220,9 +227,9 @@ body {
     position: absolute;
     top: 20px;
     right: 20px;
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.05);
     border: none;
-    color: var(--text-muted);
+    color: #64748b;
     width: 42px;
     height: 42px;
     border-radius: 50%;
@@ -251,7 +258,7 @@ body {
     border-radius: 50%;
     object-fit: cover;
     border: 4px solid var(--primary-red);
-    box-shadow: 0 10px 30px rgba(225, 29, 72, 0.35);
+    box-shadow: 0 10px 30px rgba(225, 29, 72, 0.2);
     transition: transform 0.2s ease;
 }
 
@@ -272,23 +279,23 @@ body {
     align-items: center;
     justify-content: center;
     font-size: 1rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    border: 2px solid #1e293b;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border: 2px solid #ffffff;
     pointer-events: none;
 }
 
 .modal-name {
     font-size: 1.75rem;
     font-weight: 700;
-    color: #fff;
+    color: #0f172a !important;
     margin-bottom: 8px;
 }
 
 .modal-role-badge {
     display: inline-block;
-    background: rgba(225, 29, 72, 0.15);
+    background: rgba(225, 29, 72, 0.1);
     color: var(--primary-red);
-    border: 1px solid rgba(225, 29, 72, 0.3);
+    border: 1px solid rgba(225, 29, 72, 0.2);
     padding: 8px 22px;
     border-radius: 50px;
     font-size: 1.05rem;
@@ -297,14 +304,14 @@ body {
 }
 
 .modal-info-box {
-    background: rgba(15, 23, 42, 0.6);
+    background: #f8fafc !important;
     border-radius: 16px;
     padding: 1.25rem 1.5rem;
     display: flex;
     flex-direction: column;
     gap: 14px;
     text-align: left;
-    border: 1px solid var(--border-color);
+    border: 1px solid #e2e8f0 !important;
 }
 
 .modal-info-item {
@@ -312,7 +319,7 @@ body {
     align-items: center;
     gap: 14px;
     font-size: 1.05rem;
-    color: var(--text-light);
+    color: #0f172a !important;
 }
 
 .modal-info-item i {
@@ -330,7 +337,7 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.95);
+    background: rgba(0, 0, 0, 0.9);
     backdrop-filter: blur(15px);
     z-index: 9999;
     justify-content: center;
@@ -343,7 +350,7 @@ body {
     max-height: 85vh;
     border-radius: 16px;
     object-fit: contain;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
     border: 2px solid rgba(255, 255, 255, 0.2);
     animation: zoomIn 0.25s ease-out;
 }

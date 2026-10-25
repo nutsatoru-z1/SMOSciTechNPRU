@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="smostyle.css">
     <link rel="stylesheet" href="/navbar.css">
     <link rel="stylesheet" href="/footer.css">
-    <link rel="stylesheet" href="/Responsive.css">
+    <link rel="stylesheet" href="/dropbar.css">
 
 </head>
 
@@ -26,7 +26,7 @@
     <!-- Header Navbar -->
     <header class="header">
         <div class="full-wrapper navbar-container">
-            <a class="brand-logo">
+            <a href="../index.html" class="brand-logo">
                 <img src="../images/smologo.jpg" alt="Logo" onerror="this.style.display='none'">
                 <div class="brand-text">
                     <div class="brand-title">สโมสรนักศึกษา คณะวิทยาศาสตร์และเทคโนโลยี</div>
@@ -34,8 +34,23 @@
                 </div>
             </a>
 
+            <!-- ปุ่ม 3 ขีดสำหรับมือถือ -->
+            <button class="mobile-menu-toggle" onclick="toggleMobileDropdown(event)" aria-label="เปิดเมนู">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <!-- กล่องตัวเลือกเมนู Dropdown สำหรับมือถือ -->
+            <div id="mobileDropdownMenu" class="mobile-dropdown-menu">
+                <a href="../index.html" class="dropdown-item">หน้าแรก</a>
+                <a href="../index.html#announcements-section" class="dropdown-item">ข่าวสาร</a>
+                <a href="../index.html#activities-section" class="dropdown-item">กิจกรรม</a>
+                <a href="smochart.html" class="dropdown-item active">สโมสรนักศึกษา</a>
+                <a href="../leadsec/leadsecchart.html" class="dropdown-item">หัวหน้าหมู่เรียน</a>
+            </div>
+
+            <!-- เมนูคอมพิวเตอร์ (PC) - สังเกตว่าหน้าสโมสรให้ใส่ class="nav-link active" ที่ปุ่ม "สโมสรนักศึกษา" -->
             <nav>
-                <ul class="nav-menu">
+                <ul class="nav-menu" id="mainNavMenu">
                     <li><a href="../index.html" class="nav-link">หน้าแรก</a></li>
                     <li><a href="../index.html#announcements-section" class="nav-link">ข่าวสาร</a></li>
                     <li><a href="../index.html#activities-section" class="nav-link">กิจกรรม</a></li>
@@ -198,6 +213,8 @@
 
     <!-- JavaScript -->
     <script src="smo.js"></script>
+    <script src="/dropbar.js"></script>
+
 </body>
 
 </html>

@@ -31,7 +31,110 @@ body {
     flex-direction: column;
 }
 
+/* --- สไตล์แบนเนอร์สไลด์ด้านบนสุด (Banner Hero Slider) --- */
+.banner-hero-section {
+    width: 100%;
+    background: #0b0f19;
+    margin-bottom: 2rem;
+}
 
+.banner-hero-container {
+    position: relative;
+    width: 100%;
+    height: 650px; /* ความสูงในแนวตั้งบนหน้าจอ PC (ปรับลด/เพิ่มได้ตามชอบ) */
+    overflow: hidden;
+    background: #0f172a;
+}
+
+.banner-slide-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.banner-slide-item.active {
+    opacity: 1;
+    z-index: 2;
+}
+
+.banner-slide-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* จัดรูปภาพให้เต็มกรอบพอดีจอแนวนอนโดยไม่เสียสัดส่วน */
+}
+
+/* ปุ่มลูกศรซ้าย-ขวา สำหรับกดเลื่อน */
+.banner-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: background 0.2s;
+}
+
+.banner-nav-btn:hover {
+    background: #e11d48;
+}
+
+.banner-btn-prev { left: 20px; }
+.banner-btn-next { right: 20px; }
+
+/* จุดไข่ปลาบอกตำแหน่งหน้า (Dots) ด้านล่าง */
+.banner-dots {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+}
+
+.banner-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.banner-dot.active {
+    background: #e11d48;
+    width: 30px;
+    border-radius: 6px;
+}
+
+/* --- Responsive สำหรับหน้าจอมือถือ --- */
+@media (max-width: 768px) {
+    .banner-hero-container {
+        height: 250px; /* ลดความสูงลงบนมือถือให้เหมาะสม */
+    }
+    .banner-nav-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 0.9rem;
+    }
+}
 
 .full-wrapper {
     width: 100%;
@@ -318,4 +421,3 @@ body {
 .btn-open-file:hover {
     box-shadow: 0 4px 15px rgba(225, 29, 72, 0.3);
 }
-

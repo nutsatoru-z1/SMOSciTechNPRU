@@ -510,3 +510,172 @@ document.addEventListener('DOMContentLoaded', function () {
     renderChart();
     renderHeads();
 });
+
+
+
+// --- โหลดและแสดงรายการแบนเนอร์ในตารางหน้า Admin ---
+function renderAdminBanners() {
+    const tbody = document.getElementById('adminBannerTableBody');
+    if (!tbody) return;
+
+    const rawBanners = localStorage.getItem('smo_banners');
+    const banners = rawBanners ? JSON.parse(rawBanners) : [];
+
+    if (banners.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:var(--text-muted); padding: 2rem;">ยังไม่มีข้อมูลแบนเนอร์ในระบบ</td></tr>`;
+        return;
+    }
+
+    let html = '';
+    banners.forEach((item, index) => {
+        html += `
+            <tr>
+                <td><img src="${item.img}" class="img-thumb rect"></td>
+                <td style="font-weight:600; vertical-align: middle;">แบนเนอร์ลำดับที่ ${index + 1}</td>
+                <td style="text-align: center; vertical-align: middle;">
+                    <div class="action-btns" style="justify-content: center;">
+                        <button class="btn-action btn-edit" onclick="openEditBannerModal(${index})"><i class="fa-solid fa-pen"></i></button>
+                        <button class="btn-action btn-delete" onclick="deleteBanner(${index})"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                </td>
+            </tr>`;
+    });
+    tbody.innerHTML = html;
+}
+
+// แปลงไฟล์รูปภาพที่อัปโหลดใหม่เป็น Base64 สำหรับเพิ่ม
+function previewBannerImage(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('adminBannerBase64').value = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+// เพิ่มแบนเนอร์ใหม่
+function addNewBanner() {
+    const imgBase64 = document.getElementById('adminBannerBase64').value;
+    if (!imgBase64) {
+        alert('กรุณาเลือกรูปภาพแบนเนอร์ก่อน!');
+        return;
+    }
+
+    let rawBanners = localStorage.getItem('smo_banners');
+    let banners = rawBanners ? JSON.parse(rawBanners) : [];
+    
+    banners.push({ img: imgBase64 });
+    localStorage.setItem('smo_banners', JSON.stringify(banners));
+    
+    // เคลียร์ค่าฟอร์ม
+    document.getElementById('adminBannerInput').value = '';
+    document.getElementById('adminBannerBase64').value = '';
+    if (document.getElementById('adminBannerPreview')) {
+        document.getElementById('adminBannerPreview').style.display = 'none';
+    }
+    if (document.getElementById('adminBannerFileName')) {
+        document.getElementById('adminBannerFileName').innerText = 'เลือกรูปภาพแบนเนอร์';
+    }
+
+    renderAdminBanners();
+    alert('เพิ่มแบนเนอร์เรียบร้อยแล้ว!');
+}
+
+// เปิดหน้าต่าง Modal แก้ไขแบนเนอร์
+function openEditBannerModal(index) {
+    let rawBanners = localStorage.getItem('smo_banners');
+    let banners = rawBanners ? JSON.parse(rawBanners) : [];
+    const banner = banners[index];
+
+    if (banner) {
+        document.getElementById('editBannerIndex').value = index;
+        document.getElementById('editBannerPreview').src = banner.img;
+        document.getElementById('editBannerNewBase64').value = banner.img; // ค่าเริ่มต้นใช้รูปเดิม
+        document.getElementById('editBannerModal').style.display = 'flex';
+    }
+}
+
+// ปิดหน้าต่าง Modal แก้ไข
+function closeEditBannerModal() {
+    document.getElementById('editBannerModal').style.display = 'none';
+}
+
+// แปลงรูปภาพใหม่ในหน้าต่างแก้ไข
+// แปลงไฟล์รูปภาพที่อัปโหลดใหม่เป็น Base64 สำหรับเพิ่มแบนเนอร์
+function previewBannerImage(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    if (document.getElementById('adminBannerFileName')) {
+        document.getElementById('adminBannerFileName').innerText = file.name;
+    }
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function(e) {
+        const img = new Image();
+        img.src = e.target.result;
+        img.onload = function() {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const maxWidth = 1200; // แบนเนอร์ใช้ความกว้างสูงได้เพื่อให้คมชัด
+            let width = img.width;
+            let height = img.height;
+
+            if (width > maxWidth) {
+                height = Math.round((height * maxWidth) / width);
+                width = maxWidth;
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+            ctx.drawImage(img, 0, 0, width, height);
+
+            const compressedBase64 = canvas.toDataURL('image/jpeg', 0.8);
+            document.getElementById('adminBannerBase64').value = compressedBase64;
+
+            const preview = document.getElementById('adminBannerPreview');
+            if (preview) {
+                preview.src = compressedBase64;
+                preview.style.display = 'block';
+            }
+        };
+    };
+}
+
+// บันทึกการแก้ไขแบนเนอร์
+function updateBannerData() {
+    const index = document.getElementById('editBannerIndex').value;
+    const newImg = document.getElementById('editBannerNewBase64').value;
+
+    let rawBanners = localStorage.getItem('smo_banners');
+    let banners = rawBanners ? JSON.parse(rawBanners) : [];
+
+    if (banners[index]) {
+        banners[index].img = newImg;
+        localStorage.setItem('smo_banners', JSON.stringify(banners));
+        closeEditBannerModal();
+        renderAdminBanners();
+        alert('อัปเดตข้อมูลแบนเนอร์เรียบร้อยแล้ว!');
+    }
+}
+
+// ลบแบนเนอร์
+function deleteBanner(index) {
+    if (confirm('คุณต้องการลบแบนเนอร์นี้ใช่หรือไม่?')) {
+        let rawBanners = localStorage.getItem('smo_banners');
+        let banners = rawBanners ? JSON.parse(rawBanners) : [];
+
+        banners.splice(index, 1);
+        localStorage.setItem('smo_banners', JSON.stringify(banners));
+        renderAdminBanners();
+        alert('ลบแบนเนอร์เรียบร้อยแล้ว!');
+    }
+}
+
+// เรียกใช้งานเมื่อโหลดหน้า Admin
+document.addEventListener('DOMContentLoaded', function() {
+    renderAdminBanners();
+});

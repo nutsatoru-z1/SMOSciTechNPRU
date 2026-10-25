@@ -1,0 +1,91 @@
+/* สไตล์ปุ่ม 3 ขีด */
+.mobile-menu-toggle {
+    display: none;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #ffffff !important;
+    font-size: 1.2rem;
+    cursor: pointer;
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.mobile-menu-toggle:hover {
+    background: #e11d48;
+    border-color: #e11d48;
+}
+
+/* กล่องตัวเลือกเมนูแบบ Dropdown (ซ่อนเริ่มต้น) */
+.mobile-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 75px;
+    /* ระยะห่างจากขอบบน */
+    right: 1.5rem;
+    width: 220px;
+    background: #0f172a;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    z-index: 99999;
+    padding: 8px;
+    flex-direction: column;
+    gap: 4px;
+    animation: dropdownFadeIn 0.2s ease-out;
+}
+
+/* แสดงผลกล่องเมนูเมื่อมีคลาส active */
+.mobile-dropdown-menu.active {
+    display: flex;
+}
+
+@keyframes dropdownFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dropdown-item {
+    display: block;
+    padding: 10px 14px;
+    color: #dbd1d1;
+    text-decoration: none;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    transition: all 0.2s;
+    background: transparent !important;
+    /* ป้องกันไม่ให้ติดสีพื้นหลัง */
+}
+
+/* จะเปลี่ยนเป็นสีแดงเฉพาะเวลาเอาเมาส์ไปชี้ (Hover) เท่านั้น */
+.dropdown-item:hover {
+    background: #e11d48 !important;
+    color: #ffffff !important;
+}
+
+.dropdown-item.active {
+    background: #e11d48;
+}
+
+/* --- Media Query สำหรับมือถือและไอแพด (หน้าจอต่ำกว่า 992px) --- */
+@media (max-width: 992px) {
+    .header nav {
+        display: none !important;
+        /* ซ่อนเมนูแนวนอนบนมือถือ */
+    }
+
+    .mobile-menu-toggle {
+        display: flex !important;
+        /* แสดงปุ่ม 3 ขีดเฉพาะบนมือถือ */
+    }
+}

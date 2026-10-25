@@ -19,7 +19,7 @@ function renderAnnouncements() {
     data.forEach((item, index) => {
         // ดึงรูปปกหลัก หรือรูปแรกจาก extraImgs
         let imgUrl = item.img || (item.extraImgs && item.extraImgs.length > 0 ? item.extraImgs[0] : 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&auto=format&fit=crop&q=80');
-        
+
         let badgeHTML = '';
         if (item.extraImgs && item.extraImgs.length > 0) {
             badgeHTML = `<span class="card-category" style="left: auto; right: 12px;"><i class="fa-solid fa-images"></i> +${item.extraImgs.length} รูป</span>`;
@@ -174,7 +174,7 @@ function openAnnModal(index) {
         mainImg.src = mainImgSrc;
         mainImg.style.display = 'block';
         mainImg.style.cursor = 'pointer';
-        mainImg.onclick = function() { openImageZoom(mainImgSrc); };
+        mainImg.onclick = function () { openImageZoom(mainImgSrc); };
     } else {
         mainImg.style.display = 'none';
     }
@@ -239,7 +239,7 @@ function openActModal(index) {
         mainImg.src = imagesList[0];
         mainImg.style.display = 'block';
         mainImg.style.cursor = 'pointer';
-        mainImg.onclick = function() { openImageZoom(imagesList[0]); };
+        mainImg.onclick = function () { openImageZoom(imagesList[0]); };
     } else {
         mainImg.style.display = 'none';
     }
@@ -289,7 +289,7 @@ function setupNavigation() {
 
             if (targetAttr && targetAttr.startsWith('#')) {
                 e.preventDefault();
-                
+
                 const targetSection = document.querySelector(targetAttr);
                 if (targetSection) {
                     targetSection.scrollIntoView({
@@ -305,7 +305,7 @@ function setupNavigation() {
     });
 
     const sections = document.querySelectorAll('section[id], div[id*="section"]');
-    
+
     window.addEventListener('scroll', function () {
         let scrollPos = window.scrollY + 150;
 
@@ -395,7 +395,7 @@ function renderFooterContact() {
 
     // 1. ลองค้นหาจากข้อมูลผังคณะกรรมการสโมสร (smo_chart_members)
     const chartData = JSON.parse(localStorage.getItem('smo_chart_members') || '[]');
-    const president = chartData.find(item => 
+    const president = chartData.find(item =>
         item.role && (item.role.includes('นายก') || item.role.includes('ประธาน'))
     );
 
@@ -422,26 +422,109 @@ document.addEventListener('DOMContentLoaded', function () {
     renderFooterContact(); // <--- ดึงเบอร์มาแสดงที่ Footer อัตโนมัติ
 });
 
-// --- ฟังก์ชันเปิด-ปิด Sidebar เฉพาะหน้าจอมือถือ/ไอแพด ---
-function toggleSidebarMobile(e) {
-    // ให้ทำงานเฉพาะเมื่อหน้าจอมีความกว้างน้อยกว่าหรือเท่ากับ 992px (มือถือ/ไอแพด)
-    if (window.innerWidth <= 992) {
-        if (e) e.preventDefault();
-        const sidebar = document.getElementById('mobileSidebar');
-        const overlay = document.getElementById('sidebarOverlay');
-        if (sidebar && overlay) {
-            sidebar.classList.toggle('active');
-            overlay.classList.toggle('active');
+
+
+// --- ระบบแบนเนอร์สไลด์ด้านบนสุด (รองรับการเปลี่ยนภาพทุกๆ 10 วินาที และวนลูป) ---
+class AdminBannerSlider {
+    constructor(containerId) {
+        this.container = document.getElementById(containerId);
+        this.banners = [];
+        this.currentIndex = 0;
+        this.timer = null;
+        this.init();
+    }
+
+    init() {
+        if (!this.container) return;
+
+        // ดึงข้อมูลภาพแบนเนอร์ที่แอดมินบันทึกไว้ (ใช้ Key: 'smo_banners')
+        const rawBanners = localStorage.getItem('smo_banners');
+        this.banners = rawBanners ? JSON.parse(rawBanners) : [];
+
+        // ถ้ายังไม่มีข้อมูลแอดมินเพิ่ม ให้ใส่ภาพตัวอย่างเริ่มต้นไว้ก่อน
+        if (this.banners.length === 0) {
+            this.banners = [
+                { img: 'https://images.unsplash.com/photo-1517649763962-0c623266010b?w=1600' },
+                { img: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1600' }
+            ];
         }
+
+        let html = '';
+        this.banners.forEach((item, index) => {
+            const activeClass = index === 0 ? 'active' : '';
+            html += `
+                <div class="banner-slide-item ${activeClass}">
+                    <img src="${item.img}" alt="Banner Image">
+                </div>`;
+        });
+
+        // ปุ่มลูกศรซ้าย-ขวา
+        html += `
+            <button class="banner-nav-btn banner-btn-prev" onclick="bannerSliderInstance.prev()"><i class="fa-solid fa-chevron-left"></i></button>
+            <button class="banner-nav-btn banner-btn-next" onclick="bannerSliderInstance.next()"><i class="fa-solid fa-chevron-right"></i></button>
+        `;
+
+        // จุดไข่ปลา (Dots)
+        html += `<div class="banner-dots">`;
+        this.banners.forEach((_, index) => {
+            const activeDot = index === 0 ? 'active' : '';
+            html += `<button class="banner-dot ${activeDot}" onclick="bannerSliderInstance.goTo(${index})"></button>`;
+        });
+        html += `</div>`;
+
+        this.container.innerHTML = html;
+        this.startAutoPlay();
+    }
+
+    show(index) {
+        const slides = this.container.querySelectorAll('.banner-slide-item');
+        const dots = this.container.querySelectorAll('.banner-dot');
+        if (slides.length === 0) return;
+
+        // ระบบวนลูป (ถ้าถึงรูปสุดท้าย กดถัดไปจะกลับมารูปแรกสุดทันที)
+        if (index >= slides.length) {
+            this.currentIndex = 0;
+        } else if (index < 0) {
+            this.currentIndex = slides.length - 1;
+        } else {
+            this.currentIndex = index;
+        }
+
+        slides.forEach((s, i) => s.classList.toggle('active', i === this.currentIndex));
+        dots.forEach((d, i) => d.classList.toggle('active', i === this.currentIndex));
+    }
+
+    next() {
+        this.show(this.currentIndex + 1);
+        this.resetAutoPlay();
+    }
+
+    prev() {
+        this.show(this.currentIndex - 1);
+        this.resetAutoPlay();
+    }
+
+    goTo(index) {
+        this.show(index);
+        this.resetAutoPlay();
+    }
+
+    startAutoPlay() {
+        // ตั้งเวลาเปลี่ยนภาพอัตโนมัติทุกๆ 10 วินาที (10000 มิลลิวินาที) ตามที่คุณต้องการ
+        this.timer = setInterval(() => {
+            this.show(this.currentIndex + 1);
+        }, 10000);
+    }
+
+    resetAutoPlay() {
+        clearInterval(this.timer);
+        this.startAutoPlay();
     }
 }
 
-// ใช้ชื่อฟังก์ชันเดิมเผื่อปุ่มปิดข้างในเรียกใช้งาน
-function toggleSidebar() {
-    const sidebar = document.getElementById('mobileSidebar');
-    const overlay = document.getElementById('sidebarOverlay');
-    if (sidebar && overlay) {
-        sidebar.classList.toggle('active');
-        overlay.classList.toggle('active');
-    }
-}
+let bannerSliderInstance = null;
+
+// เรียกใช้งานเมื่อโหลดหน้าแรก
+document.addEventListener('DOMContentLoaded', function () {
+    bannerSliderInstance = new AdminBannerSlider('adminBannerSlider');
+});
