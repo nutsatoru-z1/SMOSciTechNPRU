@@ -421,3 +421,27 @@ document.addEventListener('DOMContentLoaded', function () {
     setupNavigation();
     renderFooterContact(); // <--- ดึงเบอร์มาแสดงที่ Footer อัตโนมัติ
 });
+
+// --- ฟังก์ชันเปิด-ปิด Sidebar เฉพาะหน้าจอมือถือ/ไอแพด ---
+function toggleSidebarMobile(e) {
+    // ให้ทำงานเฉพาะเมื่อหน้าจอมีความกว้างน้อยกว่าหรือเท่ากับ 992px (มือถือ/ไอแพด)
+    if (window.innerWidth <= 992) {
+        if (e) e.preventDefault();
+        const sidebar = document.getElementById('mobileSidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        if (sidebar && overlay) {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+    }
+}
+
+// ใช้ชื่อฟังก์ชันเดิมเผื่อปุ่มปิดข้างในเรียกใช้งาน
+function toggleSidebar() {
+    const sidebar = document.getElementById('mobileSidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    if (sidebar && overlay) {
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+    }
+}
